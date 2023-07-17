@@ -29,28 +29,36 @@ export default class GameLevel {
     getParticles() {
         const output = [];
         const colors = [
-            {id: 'GREEN', color: COLORS['GREEN'][5]},
-            {id: 'PURPLE', color: COLORS['PURPLE'][5]},
-            {id: 'BLUE', color: COLORS['BLUE'][5]},
-            {id: 'YELLOW', color: COLORS['YELLOW'][3]},
+            {id: 'GREEN', color: COLORS['GREEN'][5], weight: 1},
+            {id: 'PURPLE', color: COLORS['PURPLE'][5], weight: 2},
+            {id: 'BLUE', color: COLORS['BLUE'][5], weight: 3},
+            {id: 'YELLOW', color: COLORS['YELLOW'][3], weight: 4},
         ];
 
-        new Array(100).fill(0).forEach((a) => {
-            const {id, color} = colors[this.app.tools.random(0, colors.length, true)];
-            output.push({
-                name: 'Particle',
-                props: {
-                    id,
-                    app: this.app,
-                    radius: 2,
-                    color,
-                    coords: {
-                        x: this.app.tools.random(-200, 200),
-                        y: this.app.tools.random(-200, 200)
+        const total = 3000;
+        const divisions = 4;
+        const numbersPerDivision = Math.floor(total / divisions);
+
+        for (let i = 0; i < divisions; i++) {
+            const index = i % colors.length;
+            const {id, color} = colors[index];
+
+            for (let j = 0; j < numbersPerDivision; j++) {
+                output.push({
+                    name: 'Particle',
+                    props: {
+                        id,
+                        app: this.app,
+                        radius: 2,
+                        color,
+                        coords: {
+                            x: this.app.tools.random(-200, 200),
+                            y: this.app.tools.random(-200, 200)
+                        }
                     }
-                }
-            })
-        })
+                });
+            }
+        }
 
         return output;
     }
