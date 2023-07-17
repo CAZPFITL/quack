@@ -12,7 +12,7 @@ export default class Particle {
         this.color = color;
         this.coords = coords;
         this.speed = speed ?? {vx: this.app.tools.random(-2,2), vy: this.app.tools.random(-2,2)};
-        this.radius = radius;
+        this.radius = radius * weight;
         this.weight = weight;
         this.thresholdDistance = 1.5 * weight;
     }
@@ -52,10 +52,10 @@ export default class Particle {
 
             const size = this.app.factory.binnacle.Map[0].size;
 
-            if (newCoordX <= -size.width / 2 || newCoordX >= size.width / 2) {
+            if (newCoordX <= -((size.width / 2) - this.radius) || newCoordX >= ((size.width / 2) - this.radius)) {
                 this.speed.vx *= -1;
             }
-            if (newCoordY <= -size.height / 2 || newCoordY >= size.height / 2) {
+            if (newCoordY <= -((size.height / 2) - this.radius) || newCoordY >= ((size.height / 2) - this.radius)) {
                 this.speed.vy *= -1;
             }
 

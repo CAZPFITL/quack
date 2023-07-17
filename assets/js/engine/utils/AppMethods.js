@@ -50,7 +50,7 @@ export default class AppMethods {
 
     loadGame(Game) {
         this.state.setState(LOAD_GAME);
-        this.game = new Game(this, () => this.state.setState(PLAY_GAME));
+        this.game = new Game(this, () => this.state.setState(PLAY_GAME))
     }
 
     update() {
