@@ -55,12 +55,12 @@ export default class Physics {
         const coords = entity.coords;
         // Limit Movement
         (
-            !this.app.gui.get.polysIntersect(entity.polygons, this.app.game.level.boundTargets.polygons.slice(0, 4)) &&
-            !this.app.gui.get.polysIntersect(entity.polygons, this.app.game.level.boundTargets.polygons.slice(5, 8))
+            !this.app.gui.get.polysIntersect(entity.polygons, this.app.game.level.board.polygons.slice(0, 4)) &&
+            !this.app.gui.get.polysIntersect(entity.polygons, this.app.game.level.board.polygons.slice(5, 8))
         ) ? (coords.x -= x) : (coords.x -= coords.x > 0 ? 0.1 : -0.1);
         (
-            !this.app.gui.get.polysIntersect(entity.polygons, this.app.game.level.boundTargets.polygons.slice(8, 11)) &&
-            !this.app.gui.get.polysIntersect(entity.polygons, this.app.game.level.boundTargets.polygons.slice(12, 15))
+            !this.app.gui.get.polysIntersect(entity.polygons, this.app.game.level.board.polygons.slice(8, 11)) &&
+            !this.app.gui.get.polysIntersect(entity.polygons, this.app.game.level.board.polygons.slice(12, 15))
         ) ? (coords.y -= y) : (coords.y -= coords.y > 0 ? 0.1 : -0.1);
     }
 

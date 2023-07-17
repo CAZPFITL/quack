@@ -1,5 +1,4 @@
 import GameLevel from "./utils/components/GameLevel.js";
-import Entity from "./utils/entities/Yellow.js";
 import Gui from "./utils/gui/Gui.js";
 import States from "../../engine/utils/patterns/State.js";
 import Player from "./utils/components/Player.js";
@@ -28,8 +27,6 @@ export default class Quack {
     #loadData() {
         // Load name
         this.name = this.constructor.name;
-        // Load Player Controls
-        this.app.player = new Player(this.app, this);
         // load Controls listeners
         this.app.controls.addListeners();
         // Run Load Callback From Engine
@@ -41,15 +38,9 @@ export default class Quack {
     #loadGameLevel() {
         this.level = this.app.factory.create(GameLevel,{
             app,
-            game: this,
-            width: 200,
-            height: 180
+            width: 500,
+            height: 500
         })
-        this.app.factory.create(Entity, {
-            app,
-            game: this,
-        })
-
         this.state.setState(MAIN_MENU);
     }
 

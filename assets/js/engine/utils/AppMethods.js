@@ -26,7 +26,7 @@ export default class AppMethods {
         this.controls = new Controls(this);
         this.physics = new Physics(this);
         this.factory = new Factory(this);
-        this.gui = new Gui(this);
+        this.gui = this.factory.create(Gui, this);
         this.camera = new Camera(this);
         this.gameSpeed = 1;
         // External Components

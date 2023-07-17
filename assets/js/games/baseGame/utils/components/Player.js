@@ -1,7 +1,7 @@
 export default class Player {
-    constructor(app, game) {
+    constructor(app) {
         this.app = app;
-        this.game = game;
+        this.game = app.game;
         this.entity = null;
         this.controls = {
             forward: 0,

@@ -5,7 +5,6 @@ export default class Gui {
         this.app = app;
         this.get = Gui;
         this.ctx = Gui.createCanvas('gameCanvas');
-        this.app.factory.addGameEntity(this);
         callback(()=> {
             this.app.log.registerEvent(
                 `New Gui Created`,
@@ -112,6 +111,14 @@ export default class Gui {
         }
         entity.polygons = points;
     }
+
+    static drawCircle(ctx, entity, fill = true) {
+        ctx.beginPath();
+        ctx.arc(entity.coords.x, entity.coords.y, entity.radius, 0 * Math.PI, 2 * Math.PI);  // x, y, radius, ArcStart, ArcEnd
+        ctx.closePath();
+        ctx.strokeStyle = ctx.fillStyle = entity.color;
+        fill ? ctx.fill() : ctx.stroke()
+    };
 
     static drawPolygon(ctx, entity) {
         if (entity.polygons.length < 1) return;

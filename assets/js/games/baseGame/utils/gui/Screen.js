@@ -89,24 +89,26 @@ export default class Screen {
     update() {
         this.colors = {
             MAIN_MENU: {
-                background: COLORS.PURPLE[0],
+                background: COLORS.PURPLE[1],
                 buttons: {
                     variation1: {
-                        hover: COLORS.YELLOW[0],
-                        click: COLORS.GREEN[0],
-                        normal: COLORS.GREEN[1],
+                        hover: COLORS.PURPLE[3],
+                        click: COLORS.PURPLE[1],
+                        normal: COLORS.PURPLE[2],
                         stroke: COLORS.BLACK[0],
                     },
                 },
                 mainCard: {
-                    text: COLORS.WHITE[0],
-                    background: COLORS.BLACK[4],
-                    color: COLORS.GREEN[0],
-                    width: 5
+                    text: COLORS.PURPLE[2],
+                    background: COLORS.GREEN[2],
+                    color: COLORS.PURPLE[0],
+                    stroke: COLORS.PURPLE[0],
+                    width: 5,
+
                 }
             },
             PLAY: {
-                background: COLORS.BLACK[0],
+                background: COLORS.PURPLE[0],
             }
         }
         this.buttonsCollection = {
@@ -138,6 +140,19 @@ export default class Screen {
         }
         this.decorations = {
             MAIN_MENU: {
+                mainCard: {
+                    type: 'square',
+                    props: {
+                        ctx: this.app.gui.ctx,
+                        x: -300,
+                        y: -200,
+                        width: 600,
+                        height: 400,
+                        color: this.colors.MAIN_MENU.mainCard.background,
+                        stroke: this.colors.MAIN_MENU.mainCard.stroke,
+                        widthStroke: this.colors.MAIN_MENU.mainCard.width
+                    }
+                },
                 title: {
                     type: 'text',
                     props:{
@@ -150,19 +165,6 @@ export default class Screen {
                         width: 600,
                         height: 30,
                         center: true
-                    }
-                },
-                mainCard: {
-                    type: 'square',
-                    props: {
-                        ctx: this.app.gui.ctx,
-                            x: -300,
-                        y: -200,
-                        width: 600,
-                        height: 400,
-                        color: this.colors.MAIN_MENU.mainCard.background,
-                        stroke: this.colors.MAIN_MENU.mainCard.color,
-                        widthStroke: this.colors.MAIN_MENU.mainCard.width
                     }
                 }
             }
