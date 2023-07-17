@@ -54,7 +54,7 @@ export default class Quack {
      */
     update() {
         if (this.state.state === PLAY && this.app.camera.zoom !== 300) {
-            this.app.camera.zoom = 300
+            this.app.camera.zoom = 600
         }
         (this.state.state === LOAD_GAME_DATA) && this.#loadData();
         (this.state.state === LOAD_GAME_LEVEL) && this.#loadGameLevel();
