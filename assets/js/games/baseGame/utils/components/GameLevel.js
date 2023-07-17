@@ -2,6 +2,10 @@ import {GAME_OVER, PLAY, COLORS} from "../../env.js";
 import Map from '../entities/Map.js'
 import Particle from '../entities/Particle.js'
 
+const mapSize = {
+    width: 200,
+    height: 200
+}
 export default class GameLevel {
     constructor({app, addedRules = []}) {
         this.app = app;
@@ -17,8 +21,7 @@ export default class GameLevel {
                 props: {
                     app: app,
                     level: this,
-                    width: 500,
-                    height: 500
+                    ...mapSize
                 }
             },
             ...this.getParticles()
@@ -28,22 +31,17 @@ export default class GameLevel {
 
     getParticles() {
         const output = [];
-        const colors = [
-            {id: 'GREEN', color: COLORS['GREEN'][5], weight: 1},
-            {id: 'PURPLE', color: COLORS['PURPLE'][5], weight: 2},
-            {id: 'BLUE', color: COLORS['BLUE'][5], weight: 3},
-            {id: 'YELLOW', color: COLORS['YELLOW'][3], weight: 4},
+        const particles = [
+            {id: 'GREEN', color: COLORS['GREEN'][5], weight:0.2, count: 1, speed:{vx: 0, vy:0}},
+            {id: 'PURPLE', color: COLORS['PURPLE'][5], weight: 0.1, count: 1, speed:{vx: 0, vy:0}},
+            {id: 'BLUE', color: COLORS['BLUE'][5], weight: 0.44, count: 1, speed:{vx: 0, vy:0}},
+            {id: 'YELLOW', color: COLORS['YELLOW'][3], weight: 1, count: 1, speed:{vx: 0, vy:0}},
         ];
 
-        const total = 3000;
-        const divisions = 4;
-        const numbersPerDivision = Math.floor(total / divisions);
+        particles.forEach((particle, index) => {
+            for (let i = 0; i < particle.count; i++) {
+                const {id, color, weight, speed} = particle;
 
-        for (let i = 0; i < divisions; i++) {
-            const index = i % colors.length;
-            const {id, color} = colors[index];
-
-            for (let j = 0; j < numbersPerDivision; j++) {
                 output.push({
                     name: 'Particle',
                     props: {
@@ -51,14 +49,16 @@ export default class GameLevel {
                         app: this.app,
                         radius: 2,
                         color,
+                        weight,
+                        speed,
                         coords: {
-                            x: this.app.tools.random(-200, 200),
-                            y: this.app.tools.random(-200, 200)
+                            x: this.app.tools.random(-mapSize.width / 2, mapSize.width / 2),
+                            y: this.app.tools.random(-mapSize.height / 2, mapSize.height / 2)
                         }
                     }
                 });
             }
-        }
+        })
 
         return output;
     }

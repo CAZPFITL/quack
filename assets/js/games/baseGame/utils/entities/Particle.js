@@ -1,7 +1,7 @@
 import {GAME_OVER, PLAY} from "../../env.js";
 
 export default class Particle {
-    constructor({id, app, coords = {x: 0, y: 0}, color = '#000', radius = 1, weight = 1}) {
+    constructor({id, app, coords = {x: 0, y: 0}, color = '#000', radius = 1, weight, speed}) {
         this.id = id;
         this.app = app;
         this.game = app.game;
@@ -11,10 +11,10 @@ export default class Particle {
         // Measurements
         this.color = color;
         this.coords = coords;
-        this.speed = {vx: this.app.tools.random(-2,2), vy: this.app.tools.random(-2,2)};
+        this.speed = speed ?? {vx: this.app.tools.random(-2,2), vy: this.app.tools.random(-2,2)};
         this.radius = radius;
         this.weight = weight;
-        this.thresholdDistance = 5 * weight;
+        this.thresholdDistance = 1.5 * weight;
     }
 
     distanceTo(particle) {
@@ -36,7 +36,7 @@ export default class Particle {
             let sumWeightedSpeedY = 0;
 
             particlesInRange.forEach(particle => {
-                const weightRatio = particle.weight / totalWeight;
+                const weightRatio = (particle.weight !== 0) ? particle.weight / totalWeight : 0;
                 sumWeightedSpeedX += particle.speed.vx * weightRatio;
                 sumWeightedSpeedY += particle.speed.vy * weightRatio;
             });
@@ -50,15 +50,17 @@ export default class Particle {
             const newCoordX = this.coords.x + this.speed.vx;
             const newCoordY = this.coords.y + this.speed.vy;
 
-            if (newCoordX < -250 || newCoordX > 250) {
+            const size = this.app.factory.binnacle.Map[0].size;
+
+            if (newCoordX <= -size.width / 2 || newCoordX >= size.width / 2) {
                 this.speed.vx *= -1;
             }
-            if (newCoordY < -250 || newCoordY > 250) {
+            if (newCoordY <= -size.height / 2 || newCoordY >= size.height / 2) {
                 this.speed.vy *= -1;
             }
 
-            this.coords.x = Math.max(-250, Math.min(250, newCoordX));
-            this.coords.y = Math.max(-250, Math.min(250, newCoordY));
+            this.coords.x = Math.max(-size.width, Math.min(size.width, newCoordX));
+            this.coords.y = Math.max(-size.height, Math.min(size.height, newCoordY));
         }
     }
 
