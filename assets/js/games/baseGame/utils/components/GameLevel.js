@@ -1,13 +1,18 @@
 import {GAME_OVER, PLAY, COLORS} from "../../env.js";
 import Map from '../entities/Map.js'
 import Particle from '../entities/Particle.js'
+import Rule from '../entities/Rule.js'
 
 const mapSize = {
-    width: 200,
-    height: 200
+    width: 250,
+    height: 250
 }
 export default class GameLevel {
+    rules = [];
+    particles = [];
+
     constructor({app, addedRules = []}) {
+        this.frame = 0;
         this.app = app;
         this.game = app.game;
         this.addedRules = addedRules;
@@ -15,6 +20,7 @@ export default class GameLevel {
             Map,
             Particle,
         }
+
         this.loadEntitiesList = [
             {
                 name: 'Map',
@@ -23,34 +29,34 @@ export default class GameLevel {
                     level: this,
                     ...mapSize
                 }
-            },
-            ...this.getParticles()
+            }
         ];
         this.load('entities');
+        this.load('particles');
+        this.load('rules');
+        this.load('particles_rules');
     }
 
     getParticles() {
         const output = [];
+
         const particles = [
-            {id: 'GREEN', color: COLORS['GREEN'][5], weight: 0.2, count: 100},
-            {id: 'PURPLE', color: COLORS['PURPLE'][5], weight: 0.5, count: 50},
-            {id: 'BLUE', color: COLORS['BLUE'][5], weight: 0.6, count: 20},
-            {id: 'YELLOW', color: COLORS['YELLOW'][3], weight: 0.8, count: 10},
+            {id: 'GREEN', color: COLORS['GREEN'][5], weight: 0.2, count: 500},
+            {id: 'PURPLE', color: COLORS['PURPLE'][5], count: 500},
+            {id: 'BLUE', color: COLORS['BLUE'][5], count: 500},
+            {id: 'YELLOW', color: COLORS['YELLOW'][3], count: 500},
         ];
 
         particles.forEach((particle, index) => {
             for (let i = 0; i < particle.count; i++) {
-                const {id, color, weight, speed} = particle;
+                const {id, color} = particle;
 
                 output.push({
                     name: 'Particle',
                     props: {
                         id,
                         app: this.app,
-                        radius: 2,
                         color,
-                        weight,
-                        speed,
                         coords: {
                             x: this.app.tools.random(-mapSize.width / 2, mapSize.width / 2),
                             y: this.app.tools.random(-mapSize.height / 2, mapSize.height / 2)
@@ -67,11 +73,169 @@ export default class GameLevel {
      * Load methods
      */
     load(type) {
-        if (type === 'entities') {
-            for (let entity of this?.loadEntitiesList) {
-                entity?.name && this.app.factory.create(this.classes[entity.name], entity.props);
+        if (type === 'particles_rules') {
+            this.rules.push(this.app.factory.create(Rule, {
+                app: this.app,
+                world: mapSize,
+                p1: this.particles['YELLOW'],
+                p2: this.particles['BLUE'],
+                g: this.app.tools.random(-0.01, 0.01)
+            }))
+
+            this.rules.push(this.app.factory.create(Rule, {
+                app: this.app,
+                world: mapSize,
+                p1: this.particles['YELLOW'],
+                p2: this.particles['PURPLE'],
+                g: this.app.tools.random(-0.01, 0.01)
+            }))
+
+            this.rules.push(this.app.factory.create(Rule, {
+                app: this.app,
+                world: mapSize,
+                p1: this.particles['YELLOW'],
+                p2: this.particles['GREEN'],
+                g: this.app.tools.random(-0.01, 0.01)
+            }))
+
+            this.rules.push(this.app.factory.create(Rule, {
+                app: this.app,
+                world: mapSize,
+                p1: this.particles['YELLOW'],
+                p2: this.particles['YELLOW'],
+                g: this.app.tools.random(-0.01, 0.01)
+            }))
+
+            //-------------------------------------------------------
+
+            this.rules.push(this.app.factory.create(Rule, {
+                app: this.app,
+                world: mapSize,
+                p1: this.particles['BLUE'],
+                p2: this.particles['YELLOW'],
+                g: this.app.tools.random(-0.01, 0.01)
+            }))
+
+            this.rules.push(this.app.factory.create(Rule, {
+                app: this.app,
+                world: mapSize,
+                p1: this.particles['BLUE'],
+                p2: this.particles['PURPLE'],
+                g: this.app.tools.random(-0.01, 0.01)
+            }))
+
+            this.rules.push(this.app.factory.create(Rule, {
+                app: this.app,
+                world: mapSize,
+                p1: this.particles['BLUE'],
+                p2: this.particles['GREEN'],
+                g: this.app.tools.random(-0.01, 0.01)
+            }))
+
+            this.rules.push(this.app.factory.create(Rule, {
+                app: this.app,
+                world: mapSize,
+                p1: this.particles['BLUE'],
+                p2: this.particles['BLUE'],
+                g: this.app.tools.random(-0.01, 0.01)
+            }))
+
+            //-------------------------------------------------------
+
+            this.rules.push(this.app.factory.create(Rule, {
+                app: this.app,
+                world: mapSize,
+                p1: this.particles['PURPLE'],
+                p2: this.particles['BLUE'],
+                g: this.app.tools.random(-0.01, 0.01)
+            }))
+
+            this.rules.push(this.app.factory.create(Rule, {
+                app: this.app,
+                world: mapSize,
+                p1: this.particles['PURPLE'],
+                p2: this.particles['YELLOW'],
+                g: this.app.tools.random(-0.01, 0.01)
+            }))
+
+            this.rules.push(this.app.factory.create(Rule, {
+                app: this.app,
+                world: mapSize,
+                p1: this.particles['PURPLE'],
+                p2: this.particles['GREEN'],
+                g: this.app.tools.random(-0.01, 0.01)
+            }))
+
+            this.rules.push(this.app.factory.create(Rule, {
+                app: this.app,
+                world: mapSize,
+                p1: this.particles['PURPLE'],
+                p2: this.particles['PURPLE'],
+                g: this.app.tools.random(-0.01, 0.01)
+            }))
+
+            //-------------------------------------------------------
+
+            this.rules.push(this.app.factory.create(Rule, {
+                app: this.app,
+                world: mapSize,
+                p1: this.particles['GREEN'],
+                p2: this.particles['YELLOW'],
+                g: this.app.tools.random(-0.01, 0.01)
+            }))
+
+            this.rules.push(this.app.factory.create(Rule, {
+                app: this.app,
+                world: mapSize,
+                p1: this.particles['GREEN'],
+                p2: this.particles['BLUE'],
+                g: this.app.tools.random(-0.01, 0.01)
+            }))
+
+            this.rules.push(this.app.factory.create(Rule, {
+                app: this.app,
+                world: mapSize,
+                p1: this.particles['GREEN'],
+                p2: this.particles['PURPLE'],
+                g: this.app.tools.random(-0.01, 0.01)
+            }))
+
+            this.rules.push(this.app.factory.create(Rule, {
+                app: this.app,
+                world: mapSize,
+                p1: this.particles['GREEN'],
+                p2: this.particles['GREEN'],
+                g: this.app.tools.random(-0.01, 0.01)
+            }))
+        }
+
+        if (type === 'particles') {
+            const particlesMap = this.getParticles()
+            for (let particle of particlesMap) {
+                const create = () => {
+                    return this.app.factory.create(
+                        this.classes[particle.name],
+                        particle.props
+                    );
+                }
+                if (!this.particles[particle.props.id]) {
+                    this.particles[particle.props.id] = []
+                    this.particles[particle.props.id].push(create())
+                } else {
+                    this.particles[particle.props.id].push(create())
+                }
             }
         }
+
+        if (type === 'entities') {
+            for (let entity of this?.loadEntitiesList) {
+                entity?.name && this.app.factory.create(
+                    this.classes[entity.name],
+                    entity.props
+                );
+            }
+        }
+
         if (type === 'rules') {
             for (let rule of this.addedRules) {
                 if (this.app.factory.binnacle[rule.name]) {
@@ -86,6 +250,15 @@ export default class GameLevel {
 
     update() {
         this.load('rules');
+        if (this.frame < 200) {
+            this.frame++
+        } else {
+            for (let i = 0; i < this.rules.length; i++) {
+                this.rules[i].g = this.app.tools.random(-0.01, 0.01)
+                this.frame = 0
+            }
+            this.frame = 0
+        }
     }
 
     /**
