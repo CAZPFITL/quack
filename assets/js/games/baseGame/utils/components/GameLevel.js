@@ -6,27 +6,31 @@ import Rule from '../entities/Rule.js'
 export default class GameLevel {
     rules = [];
     particles = [];
-    gravityRange = 40;
-    randomFactor = 0.1;
-    wallRepelStrength = 0.1;
-    wallRepel = 0.1;
     mapSize = {
         width: 800,
         height: 600
     };
     particleList = [
-        {name: 'GREEN', color: 0, qty: 150},
-        {name: 'GREEN', color: 4, qty: 150},
-        {name: 'GREEN', color: 9, qty: 150},
-        {name: 'PURPLE', color: 0, qty: 150},
-        {name: 'PURPLE', color: 4, qty: 150},
-        {name: 'PURPLE', color: 9, qty: 150},
-        {name: 'BLUE', color: 0, qty: 150},
-        {name: 'BLUE', color: 4, qty: 150},
-        {name: 'BLUE', color: 9, qty: 150},
-        {name: 'YELLOW', color: 0, qty: 150},
-        {name: 'YELLOW', color: 4, qty: 150},
-        {name: 'YELLOW', color: 9, qty: 150}
+        {name: 'GREEN', color: 0, qty: 50},
+        {name: 'GREEN', color: 3, qty: 50},
+        {name: 'GREEN', color: 6, qty: 50},
+        {name: 'GREEN', color: 9, qty: 50},
+        {name: 'PURPLE', color: 0, qty: 50},
+        {name: 'PURPLE', color: 3, qty: 50},
+        {name: 'PURPLE', color: 6, qty: 50},
+        {name: 'PURPLE', color: 9, qty: 50},
+        {name: 'BLUE', color: 0, qty: 50},
+        {name: 'BLUE', color: 3, qty: 50},
+        {name: 'BLUE', color: 6, qty: 50},
+        {name: 'BLUE', color: 9, qty: 50},
+        {name: 'YELLOW', color: 0, qty: 50},
+        {name: 'YELLOW', color: 3, qty: 50},
+        {name: 'YELLOW', color: 6, qty: 50},
+        {name: 'YELLOW', color: 9, qty: 50},
+        {name: 'PINK', color: 0, qty: 50},
+        {name: 'PINK', color: 3, qty: 50},
+        {name: 'PINK', color: 6, qty: 50},
+        {name: 'PINK', color: 9, qty: 50}
     ];
 
     constructor({app, addedRules = []}) {
@@ -38,7 +42,10 @@ export default class GameLevel {
             Map,
             Particle,
         }
-
+        this.gravityRange = app.tools.random(40, 80)
+        this.randomFactor = app.tools.random(0.1, 1)
+        this.wallRepelStrength = app.tools.random(0.1, 1)
+        this.wallRepel = app.tools.random(0.1, 1)
         this.loadEntitiesList = [
             {
                 name: 'Map',
@@ -149,9 +156,9 @@ export default class GameLevel {
             this.frame++
         } else {
             this.gravityRange = random(40, 80);
-            this.randomFactor = random(0.1, 0.8);
-            this.wallRepelStrength = random(0.1, 0.8);
-            this.wallRepel = random(0.1, 0.8);
+            this.randomFactor = random(0.1, 1);
+            this.wallRepelStrength = random(0.1, 1);
+            this.wallRepel = random(0.1, 1);
             for (let i = 0; i < this.rules.length; i++) {
                 this.rules[i].g = random(-this.randomFactor, this.randomFactor)
                 this.frame = 0
