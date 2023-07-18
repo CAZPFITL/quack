@@ -41,10 +41,10 @@ export default class GameLevel {
         const output = [];
 
         const particles = [
-            {id: 'GREEN', color: COLORS['GREEN'][5], weight: 0.2, count: 500},
-            {id: 'PURPLE', color: COLORS['PURPLE'][5], count: 500},
-            {id: 'BLUE', color: COLORS['BLUE'][5], count: 500},
-            {id: 'YELLOW', color: COLORS['YELLOW'][3], count: 500},
+            {id: 'GREEN', color: COLORS['GREEN'][5], weight: 0.2, count: 200},
+            {id: 'PURPLE', color: COLORS['PURPLE'][5], count: 200},
+            {id: 'BLUE', color: COLORS['BLUE'][5], count: 200},
+            {id: 'YELLOW', color: COLORS['YELLOW'][3], count: 200},
         ];
 
         particles.forEach((particle, index) => {

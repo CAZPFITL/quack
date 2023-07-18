@@ -1,4 +1,4 @@
-import {GAME_OVER, PLAY} from "../../env.js";
+import {PLAY} from "../../env.js";
 
 export default class Particle {
     constructor({id, app, coords, color = '#000', speed}) {
@@ -12,7 +12,7 @@ export default class Particle {
         this.color = color;
         this.coords = coords ?? {x: 0, y: 0};
         this.speed = {vx: 0, vy: 0};
-        this.radius = 2;
+        this.radius = 1;
     }
 
     draw(ctx) {
