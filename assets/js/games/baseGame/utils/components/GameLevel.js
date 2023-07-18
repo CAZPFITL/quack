@@ -7,13 +7,27 @@ export default class GameLevel {
     rules = [];
     particles = [];
     gravityRange = 40;
-    randomFactor = 0.5;
-    wallRepelStrength = 0.5;
-    wallRepel = 0.5;
+    randomFactor = 0.1;
+    wallRepelStrength = 0.1;
+    wallRepel = 0.1;
     mapSize = {
         width: 800,
         height: 600
     };
+    particleList = [
+        {name: 'GREEN', color: 0, qty: 150},
+        {name: 'GREEN', color: 4, qty: 150},
+        {name: 'GREEN', color: 9, qty: 150},
+        {name: 'PURPLE', color: 0, qty: 150},
+        {name: 'PURPLE', color: 4, qty: 150},
+        {name: 'PURPLE', color: 9, qty: 150},
+        {name: 'BLUE', color: 0, qty: 150},
+        {name: 'BLUE', color: 4, qty: 150},
+        {name: 'BLUE', color: 9, qty: 150},
+        {name: 'YELLOW', color: 0, qty: 150},
+        {name: 'YELLOW', color: 4, qty: 150},
+        {name: 'YELLOW', color: 9, qty: 150}
+    ];
 
     constructor({app, addedRules = []}) {
         this.frame = 0;
@@ -41,16 +55,9 @@ export default class GameLevel {
         this.load('particles_rules');
     }
 
-    getParticles() {
+    createParticlesMap() {
         const output = [];
-
-        const particles = [
-            {id: 'GREEN', color: COLORS['GREEN'][5], count: 700},
-            {id: 'PURPLE', color: COLORS['PURPLE'][5], count: 700},
-            {id: 'BLUE', color: COLORS['BLUE'][5], count: 700},
-            {id: 'YELLOW', color: COLORS['YELLOW'][3], count: 700},
-        ];
-
+        const particles = Rule.createParticleList(this.particleList);
         particles.forEach((particle, index) => {
             for (let i = 0; i < particle.count; i++) {
                 const {id, color} = particle;
@@ -69,7 +76,6 @@ export default class GameLevel {
                 });
             }
         })
-
         return output;
     }
 
@@ -78,155 +84,38 @@ export default class GameLevel {
      */
     load(type) {
         if (type === 'particles_rules') {
-            this.rules.push(this.app.factory.create(Rule, {
-                app: this.app,
-                world: this.mapSize,
-                p1: this.particles['YELLOW'],
-                p2: this.particles['BLUE'],
-                g: this.app.tools.random(-this.randomFactor, this.randomFactor)
-            }))
+            const particlePairs = Rule.getCombinations(this.particleList);
 
-            this.rules.push(this.app.factory.create(Rule, {
-                app: this.app,
-                world: this.mapSize,
-                p1: this.particles['YELLOW'],
-                p2: this.particles['PURPLE'],
-                g: this.app.tools.random(-this.randomFactor, this.randomFactor)
-            }))
+            for (let i = 0; i < particlePairs.length; i++) {
+                const p1 = particlePairs[i][0];
+                const p2 = particlePairs[i][1];
 
-            this.rules.push(this.app.factory.create(Rule, {
-                app: this.app,
-                world: this.mapSize,
-                p1: this.particles['YELLOW'],
-                p2: this.particles['GREEN'],
-                g: this.app.tools.random(-this.randomFactor, this.randomFactor)
-            }))
-
-            this.rules.push(this.app.factory.create(Rule, {
-                app: this.app,
-                world: this.mapSize,
-                p1: this.particles['YELLOW'],
-                p2: this.particles['YELLOW'],
-                g: this.app.tools.random(-this.randomFactor, this.randomFactor)
-            }))
-
-            //-------------------------------------------------------
-
-            this.rules.push(this.app.factory.create(Rule, {
-                app: this.app,
-                world: this.mapSize,
-                p1: this.particles['BLUE'],
-                p2: this.particles['YELLOW'],
-                g: this.app.tools.random(-this.randomFactor, this.randomFactor)
-            }))
-
-            this.rules.push(this.app.factory.create(Rule, {
-                app: this.app,
-                world: this.mapSize,
-                p1: this.particles['BLUE'],
-                p2: this.particles['PURPLE'],
-                g: this.app.tools.random(-this.randomFactor, this.randomFactor)
-            }))
-
-            this.rules.push(this.app.factory.create(Rule, {
-                app: this.app,
-                world: this.mapSize,
-                p1: this.particles['BLUE'],
-                p2: this.particles['GREEN'],
-                g: this.app.tools.random(-this.randomFactor, this.randomFactor)
-            }))
-
-            this.rules.push(this.app.factory.create(Rule, {
-                app: this.app,
-                world: this.mapSize,
-                p1: this.particles['BLUE'],
-                p2: this.particles['BLUE'],
-                g: this.app.tools.random(-this.randomFactor, this.randomFactor)
-            }))
-
-            //-------------------------------------------------------
-
-            this.rules.push(this.app.factory.create(Rule, {
-                app: this.app,
-                world: this.mapSize,
-                p1: this.particles['PURPLE'],
-                p2: this.particles['BLUE'],
-                g: this.app.tools.random(-this.randomFactor, this.randomFactor)
-            }))
-
-            this.rules.push(this.app.factory.create(Rule, {
-                app: this.app,
-                world: this.mapSize,
-                p1: this.particles['PURPLE'],
-                p2: this.particles['YELLOW'],
-                g: this.app.tools.random(-this.randomFactor, this.randomFactor)
-            }))
-
-            this.rules.push(this.app.factory.create(Rule, {
-                app: this.app,
-                world: this.mapSize,
-                p1: this.particles['PURPLE'],
-                p2: this.particles['GREEN'],
-                g: this.app.tools.random(-this.randomFactor, this.randomFactor)
-            }))
-
-            this.rules.push(this.app.factory.create(Rule, {
-                app: this.app,
-                world: this.mapSize,
-                p1: this.particles['PURPLE'],
-                p2: this.particles['PURPLE'],
-                g: this.app.tools.random(-this.randomFactor, this.randomFactor)
-            }))
-
-            //-------------------------------------------------------
-
-            this.rules.push(this.app.factory.create(Rule, {
-                app: this.app,
-                world: this.mapSize,
-                p1: this.particles['GREEN'],
-                p2: this.particles['YELLOW'],
-                g: this.app.tools.random(-this.randomFactor, this.randomFactor)
-            }))
-
-            this.rules.push(this.app.factory.create(Rule, {
-                app: this.app,
-                world: this.mapSize,
-                p1: this.particles['GREEN'],
-                p2: this.particles['BLUE'],
-                g: this.app.tools.random(-this.randomFactor, this.randomFactor)
-            }))
-
-            this.rules.push(this.app.factory.create(Rule, {
-                app: this.app,
-                world: this.mapSize,
-                p1: this.particles['GREEN'],
-                p2: this.particles['PURPLE'],
-                g: this.app.tools.random(-this.randomFactor, this.randomFactor)
-            }))
-
-            this.rules.push(this.app.factory.create(Rule, {
-                app: this.app,
-                world: this.mapSize,
-                p1: this.particles['GREEN'],
-                p2: this.particles['GREEN'],
-                g: this.app.tools.random(-this.randomFactor, this.randomFactor)
-            }))
+                this.rules.push(this.app.factory.create(Rule, {
+                    app: this.app,
+                    world: this.mapSize,
+                    p1: this.particles[p1],
+                    p2: this.particles[p2],
+                    g: this.app.tools.random(-this.randomFactor, this.randomFactor)
+                }));
+            }
         }
 
         if (type === 'particles') {
-            const particlesMap = this.getParticles()
+            const particlesMap = this.createParticlesMap()
+
             for (let particle of particlesMap) {
                 const create = () => {
                     return this.app.factory.create(
                         this.classes[particle.name],
                         particle.props
                     );
-                }
+                };
+
                 if (!this.particles[particle.props.id]) {
-                    this.particles[particle.props.id] = []
-                    this.particles[particle.props.id].push(create())
+                    this.particles[particle.props.id] = [];
+                    this.particles[particle.props.id].push(create());
                 } else {
-                    this.particles[particle.props.id].push(create())
+                    this.particles[particle.props.id].push(create());
                 }
             }
         }

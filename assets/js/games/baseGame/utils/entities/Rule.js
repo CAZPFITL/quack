@@ -1,9 +1,36 @@
+import {COLORS} from "../../env.js";
+
 export default class Rule {
     constructor({app, p1, p2, g}) {
         this.app = app;
         this.particles1 = p1;
         this.particles2 = p2;
         this.g = g;
+    }
+
+    static createParticleList(particleList) {
+        const particles = particleList.map(particle => {
+            return {
+                id: particle.name,
+                color: COLORS[particle.name][particle.color],
+                count: particle.qty
+            };
+        });
+
+        return particles;
+    }
+
+    static getCombinations(particleList) {
+        const input = particleList
+        const output = [];
+
+        for (let i = 0; i < input.length - 1; i++) {
+            for (let j = i + 1; j < input.length; j++) {
+                output.push([input[i].name, input[j].name]);
+            }
+        }
+
+        return output;
     }
 
     distanceBetween(particle1, particle2) {
