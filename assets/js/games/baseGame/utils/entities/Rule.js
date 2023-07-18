@@ -42,7 +42,7 @@ export default class Rule {
             }
             // Right
             if (a.coords.x >= (canvas.width / 2) - d) {
-                fx += (canvas.width / 2 - d - a.coords.x) * strength
+                fx += (-canvas.width / 2 - d - a.coords.x) * strength
             }
             // Top
             if (a.coords.y <= -((canvas.height / 2) - d)) {
@@ -50,7 +50,7 @@ export default class Rule {
             }
             // Bottom
             if (a.coords.y >= (canvas.height / 2) - d) {
-                fy += (canvas.height / 2 - d - a.coords.y) * strength
+                fy += (-canvas.height / 2 - d - a.coords.y) * strength
             }
 
             a.speed.vx = (a.speed.vx + fx) * 0.1

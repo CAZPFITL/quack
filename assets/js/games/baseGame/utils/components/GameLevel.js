@@ -6,12 +6,12 @@ import Rule from '../entities/Rule.js'
 export default class GameLevel {
     rules = [];
     particles = [];
-    gravityRange = 80;
-    randomFactor = 0.2;
-    wallRepelStrength = 1.1;
-    wallRepel = 0.8;
+    gravityRange = 40;
+    randomFactor = 0.5;
+    wallRepelStrength = 0.5;
+    wallRepel = 0.5;
     mapSize = {
-        width: 800,
+        width: 400,
         height: 400
     };
 
@@ -254,11 +254,17 @@ export default class GameLevel {
 
     update() {
         this.load('rules');
-        if (this.frame < 200) {
+        const random = this.app.tools.random;
+
+        if (this.frame < 300) {
             this.frame++
         } else {
+            this.gravityRange = random(40, 80);
+            this.randomFactor = random(0.1, 0.8);
+            this.wallRepelStrength = random(0.1, 0.8);
+            this.wallRepel = random(0.1, 0.8);
             for (let i = 0; i < this.rules.length; i++) {
-                this.rules[i].g = this.app.tools.random(-this.randomFactor, this.randomFactor)
+                this.rules[i].g = random(-this.randomFactor, this.randomFactor)
                 this.frame = 0
             }
             this.frame = 0
