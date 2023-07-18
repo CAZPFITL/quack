@@ -11,8 +11,8 @@ export default class GameLevel {
     wallRepelStrength = 0.5;
     wallRepel = 0.5;
     mapSize = {
-        width: 400,
-        height: 400
+        width: 600,
+        height: 600
     };
 
     constructor({app, addedRules = []}) {
