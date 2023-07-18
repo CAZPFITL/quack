@@ -3,13 +3,17 @@ import Map from '../entities/Map.js'
 import Particle from '../entities/Particle.js'
 import Rule from '../entities/Rule.js'
 
-const mapSize = {
-    width: 250,
-    height: 250
-}
 export default class GameLevel {
     rules = [];
     particles = [];
+    gravityRange = 80;
+    randomFactor = 0.2;
+    wallRepelStrength = 1.1;
+    wallRepel = 0.8;
+    mapSize = {
+        width: 500,
+        height: 500
+    };
 
     constructor({app, addedRules = []}) {
         this.frame = 0;
@@ -27,7 +31,7 @@ export default class GameLevel {
                 props: {
                     app: app,
                     level: this,
-                    ...mapSize
+                    ...this.mapSize
                 }
             }
         ];
@@ -41,10 +45,10 @@ export default class GameLevel {
         const output = [];
 
         const particles = [
-            {id: 'GREEN', color: COLORS['GREEN'][5], weight: 0.2, count: 200},
-            {id: 'PURPLE', color: COLORS['PURPLE'][5], count: 200},
-            {id: 'BLUE', color: COLORS['BLUE'][5], count: 200},
-            {id: 'YELLOW', color: COLORS['YELLOW'][3], count: 200},
+            {id: 'GREEN', color: COLORS['GREEN'][5], count: 700},
+            {id: 'PURPLE', color: COLORS['PURPLE'][5], count: 700},
+            {id: 'BLUE', color: COLORS['BLUE'][5], count: 700},
+            {id: 'YELLOW', color: COLORS['YELLOW'][3], count: 700},
         ];
 
         particles.forEach((particle, index) => {
@@ -58,8 +62,8 @@ export default class GameLevel {
                         app: this.app,
                         color,
                         coords: {
-                            x: this.app.tools.random(-mapSize.width / 2, mapSize.width / 2),
-                            y: this.app.tools.random(-mapSize.height / 2, mapSize.height / 2)
+                            x: this.app.tools.random(-this.mapSize.width / 2, this.mapSize.width / 2),
+                            y: this.app.tools.random(-this.mapSize.height / 2, this.mapSize.height / 2)
                         }
                     }
                 });
@@ -76,136 +80,136 @@ export default class GameLevel {
         if (type === 'particles_rules') {
             this.rules.push(this.app.factory.create(Rule, {
                 app: this.app,
-                world: mapSize,
+                world: this.mapSize,
                 p1: this.particles['YELLOW'],
                 p2: this.particles['BLUE'],
-                g: this.app.tools.random(-0.01, 0.01)
+                g: this.app.tools.random(-this.randomFactor, this.randomFactor)
             }))
 
             this.rules.push(this.app.factory.create(Rule, {
                 app: this.app,
-                world: mapSize,
+                world: this.mapSize,
                 p1: this.particles['YELLOW'],
                 p2: this.particles['PURPLE'],
-                g: this.app.tools.random(-0.01, 0.01)
+                g: this.app.tools.random(-this.randomFactor, this.randomFactor)
             }))
 
             this.rules.push(this.app.factory.create(Rule, {
                 app: this.app,
-                world: mapSize,
+                world: this.mapSize,
                 p1: this.particles['YELLOW'],
                 p2: this.particles['GREEN'],
-                g: this.app.tools.random(-0.01, 0.01)
+                g: this.app.tools.random(-this.randomFactor, this.randomFactor)
             }))
 
             this.rules.push(this.app.factory.create(Rule, {
                 app: this.app,
-                world: mapSize,
+                world: this.mapSize,
                 p1: this.particles['YELLOW'],
                 p2: this.particles['YELLOW'],
-                g: this.app.tools.random(-0.01, 0.01)
+                g: this.app.tools.random(-this.randomFactor, this.randomFactor)
             }))
 
             //-------------------------------------------------------
 
             this.rules.push(this.app.factory.create(Rule, {
                 app: this.app,
-                world: mapSize,
+                world: this.mapSize,
                 p1: this.particles['BLUE'],
                 p2: this.particles['YELLOW'],
-                g: this.app.tools.random(-0.01, 0.01)
+                g: this.app.tools.random(-this.randomFactor, this.randomFactor)
             }))
 
             this.rules.push(this.app.factory.create(Rule, {
                 app: this.app,
-                world: mapSize,
+                world: this.mapSize,
                 p1: this.particles['BLUE'],
                 p2: this.particles['PURPLE'],
-                g: this.app.tools.random(-0.01, 0.01)
+                g: this.app.tools.random(-this.randomFactor, this.randomFactor)
             }))
 
             this.rules.push(this.app.factory.create(Rule, {
                 app: this.app,
-                world: mapSize,
+                world: this.mapSize,
                 p1: this.particles['BLUE'],
                 p2: this.particles['GREEN'],
-                g: this.app.tools.random(-0.01, 0.01)
+                g: this.app.tools.random(-this.randomFactor, this.randomFactor)
             }))
 
             this.rules.push(this.app.factory.create(Rule, {
                 app: this.app,
-                world: mapSize,
+                world: this.mapSize,
                 p1: this.particles['BLUE'],
                 p2: this.particles['BLUE'],
-                g: this.app.tools.random(-0.01, 0.01)
+                g: this.app.tools.random(-this.randomFactor, this.randomFactor)
             }))
 
             //-------------------------------------------------------
 
             this.rules.push(this.app.factory.create(Rule, {
                 app: this.app,
-                world: mapSize,
+                world: this.mapSize,
                 p1: this.particles['PURPLE'],
                 p2: this.particles['BLUE'],
-                g: this.app.tools.random(-0.01, 0.01)
+                g: this.app.tools.random(-this.randomFactor, this.randomFactor)
             }))
 
             this.rules.push(this.app.factory.create(Rule, {
                 app: this.app,
-                world: mapSize,
+                world: this.mapSize,
                 p1: this.particles['PURPLE'],
                 p2: this.particles['YELLOW'],
-                g: this.app.tools.random(-0.01, 0.01)
+                g: this.app.tools.random(-this.randomFactor, this.randomFactor)
             }))
 
             this.rules.push(this.app.factory.create(Rule, {
                 app: this.app,
-                world: mapSize,
+                world: this.mapSize,
                 p1: this.particles['PURPLE'],
                 p2: this.particles['GREEN'],
-                g: this.app.tools.random(-0.01, 0.01)
+                g: this.app.tools.random(-this.randomFactor, this.randomFactor)
             }))
 
             this.rules.push(this.app.factory.create(Rule, {
                 app: this.app,
-                world: mapSize,
+                world: this.mapSize,
                 p1: this.particles['PURPLE'],
                 p2: this.particles['PURPLE'],
-                g: this.app.tools.random(-0.01, 0.01)
+                g: this.app.tools.random(-this.randomFactor, this.randomFactor)
             }))
 
             //-------------------------------------------------------
 
             this.rules.push(this.app.factory.create(Rule, {
                 app: this.app,
-                world: mapSize,
+                world: this.mapSize,
                 p1: this.particles['GREEN'],
                 p2: this.particles['YELLOW'],
-                g: this.app.tools.random(-0.01, 0.01)
+                g: this.app.tools.random(-this.randomFactor, this.randomFactor)
             }))
 
             this.rules.push(this.app.factory.create(Rule, {
                 app: this.app,
-                world: mapSize,
+                world: this.mapSize,
                 p1: this.particles['GREEN'],
                 p2: this.particles['BLUE'],
-                g: this.app.tools.random(-0.01, 0.01)
+                g: this.app.tools.random(-this.randomFactor, this.randomFactor)
             }))
 
             this.rules.push(this.app.factory.create(Rule, {
                 app: this.app,
-                world: mapSize,
+                world: this.mapSize,
                 p1: this.particles['GREEN'],
                 p2: this.particles['PURPLE'],
-                g: this.app.tools.random(-0.01, 0.01)
+                g: this.app.tools.random(-this.randomFactor, this.randomFactor)
             }))
 
             this.rules.push(this.app.factory.create(Rule, {
                 app: this.app,
-                world: mapSize,
+                world: this.mapSize,
                 p1: this.particles['GREEN'],
                 p2: this.particles['GREEN'],
-                g: this.app.tools.random(-0.01, 0.01)
+                g: this.app.tools.random(-this.randomFactor, this.randomFactor)
             }))
         }
 
@@ -254,7 +258,7 @@ export default class GameLevel {
             this.frame++
         } else {
             for (let i = 0; i < this.rules.length; i++) {
-                this.rules[i].g = this.app.tools.random(-0.01, 0.01)
+                this.rules[i].g = this.app.tools.random(-this.randomFactor, this.randomFactor)
                 this.frame = 0
             }
             this.frame = 0
