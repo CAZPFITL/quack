@@ -11,7 +11,7 @@ export default class GameLevel {
     wallRepelStrength = 0.5;
     wallRepel = 0.5;
     mapSize = {
-        width: 600,
+        width: 800,
         height: 600
     };
 
