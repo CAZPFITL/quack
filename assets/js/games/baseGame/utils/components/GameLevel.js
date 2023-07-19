@@ -3,7 +3,7 @@ import Map from '../entities/Map.js'
 import Particle from '../entities/Particle.js'
 import Rule from '../entities/Rule.js'
 
-const x = 4;
+const x = 2;
 
 export default class GameLevel {
     rules = [];
