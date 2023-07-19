@@ -10,7 +10,7 @@ export default class GameLevel {
     particles = [];
     mapSize = {
         width: 400,
-        height: 250
+        height: 800
     };
     particleList = [
         {name: 'GREEN', color: 0, qty: x},
