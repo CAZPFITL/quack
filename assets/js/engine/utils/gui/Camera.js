@@ -108,10 +108,8 @@ export default class Camera {
 
     loop = () => {
         this.begin();
-        this.app.stats.begin();
         this.app.update();
         this.app.draw();
-        this.app.stats.end();
         this.end();
     }
 };

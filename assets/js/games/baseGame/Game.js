@@ -21,6 +21,7 @@ export default class Quack {
         this.state = new States(app, this, LOAD_GAME_DATA, [LOAD_GAME_DATA, LOAD_GAME_LEVEL, PLAY, MAIN_MENU, NETWORK]);
         this.app.factory.addGameEntity(this);
     }
+
     /**
      * Private methods
      */
@@ -36,7 +37,7 @@ export default class Quack {
     }
 
     #loadGameLevel() {
-        this.level = this.app.factory.create(GameLevel,{
+        this.level = this.app.factory.create(GameLevel, {
             app,
             width: 500,
             height: 500
@@ -45,13 +46,16 @@ export default class Quack {
     }
 
     #restart() {
-        this.app.factory.binnacle = { GameObjects: this.app.factory.binnacle.GameObjects };
+        this.app.factory.binnacle = {GameObjects: this.app.factory.binnacle.GameObjects};
     }
 
     /**
      * Draw and Update methods
      */
     update() {
+        if (this.state.state === PLAY && this.app.camera.zoom !== 600) {
+            this.app.camera.zoom = 600
+        }
         (this.state.state === LOAD_GAME_DATA) && this.#loadData();
         (this.state.state === LOAD_GAME_LEVEL) && this.#loadGameLevel();
     }
